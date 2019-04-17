@@ -33,8 +33,8 @@ if %asw%==3 goto 3
 if %asw%==4 goto 4
 if %asw%==5 goto 5
 if %asw%==6 goto 6
-if %asw%==5 goto 7
-if %asw%==6 goto 8
+if %asw%==7 goto 7
+if %asw%==8 goto 8
 cls
 :1
 (echo SET EPG=879)> "%location%\settings\source.cmd"
