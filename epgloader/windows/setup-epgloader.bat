@@ -6,7 +6,7 @@ cls
 echo ###########################################################################################
 echo ###                      EPGloader Installer Fuer Windows                               ###
 echo ###                    --Takealug.de feat. easyEPG Preject--                            ###
-echo ###                                Revision 3                                           ###
+echo ###                                Revision 1                                           ###
 echo ###########################################################################################
 pause
 cls
@@ -24,7 +24,7 @@ cls
 
 echo ###########################################################################################
 echo ###########################################################################################
-echo Your Username on Tkealug ist            %user%
+echo Your Username on Takealug ist          %user%
 echo Your Password ist                      %password%
 echo Your desired Storage Path is           %location%
 echo ###########################################################################################
@@ -39,6 +39,7 @@ echo Create Directory %location%
 setlocal EnableDelayedExpansion
 if not exist "%location%" (
   mkdir "%location%"
+  mkdir "%location%"\settings 
   if "!errorlevel!" EQU "0" (
     echo ###########################################################################################
     echo Directory successfully created
@@ -61,15 +62,15 @@ if not exist "%location%" (
 cls
 echo ###########################################################################################
 echo ###########################################################################################
-echo Create configuration in %location%\config.cmd
+echo Create configuration in %location%\settings\config.cmd
 echo ###########################################################################################
 echo ###########################################################################################
-pause
-(echo SET user=%user%)> "%location%\config.cmd"
-(echo SET password=%password%)>> "%location%\config.cmd"
-(echo SET location=%location%)>> "%location%\config.cmd"
-(echo SET curl="%location%\curl\bin\curl.exe")>> "%location%\config.cmd"
-(echo SET 7z="%location%\7z\bin\7z.exe")>> "%location%\config.cmd"
+ping -n 2 127.0.0.1 > nul
+(echo SET user=%user%)> "%location%\settings\config.cmd"
+(echo SET password=%password%)>> "%location%\settings\config.cmd"
+(echo SET location=%location%)>> "%location%\settings\config.cmd"
+(echo SET curl="%location%\curl\bin\curl.exe")>> "%location%\settings\config.cmd"
+(echo SET 7z="%location%\7z\bin\7z.exe")>> "%location%\settings\config.cmd"
 
 :epgchanger
 cls
@@ -78,11 +79,12 @@ echo ###########################################################################
 echo Create EPG-Changer in %location%\change-epg.bat
 echo ###########################################################################################
 echo ###########################################################################################
-pause
-(echo call "%%cd%%\config.cmd")> "%location%\change-epg.bat"
-(echo call "%%cd%%\source.cmd")>> "%location%\change-epg.bat"
+ping -n 2 127.0.0.1 > nul
+(echo call "%%cd%%\settings\config.cmd")> "%location%\change-epg.bat"
 (echo SET curl="%location%\curl\bin\curl.exe")>> "%location%\change-epg.bat"
-(echo %%curl%% -D "%%location%%%%temp%%" "https://github.com/DeBaschdi/repo/raw/master/repository.takealug-1.0.0.zip")>> "%location%\change-epg.bat"
+(echo SET git="%location%\settings\git.bat")>> "%location%\change-epg.bat"
+(echo %%curl%% -L -o %%git%% "https://github.com/DeBaschdi/repo/raw/master/epgloader/windows/git.bat")>> "%location%\change-epg.bat"
+(echo %%git%% )>> "%location%\change-epg.bat"
 (echo exit)>> "%location%\change-epg.bat"
 
 :grabber
@@ -92,43 +94,54 @@ echo ###########################################################################
 echo Create epgloader-win.bat in %location%\epgloader-win.bat
 echo ###########################################################################################
 echo ###########################################################################################
-pause
-(echo call "%%cd%%\config.cmd")> "%location%\epgloader-win.bat"
-(echo call "%%cd%%\source.cmd")>> "%location%\epgloader-win.bat"
-(echo SET temp=\cookie.txt)>> "%location%\epgloader-win.bat"
-(echo SET filename=\guide-mapped.xml)>> "%location%\epgloader-win.bat"
-(echo SET agent="Mozilla/5.0 ^(Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6^) Gecko/20070725 Firefox/2.0.0.6")>> "%location%\epgloader-win.bat"
-(echo echo ##aufraumen ##)>> "%location%\epgloader-win.bat"
-(echo del "%%location%%%%filename%%")>> "%location%\epgloader-win.bat"
+ping -n 2 127.0.0.1 > nul
+(echo call "%%cd%%\settings\config.cmd")> "%location%\epgloader-win.bat"
+(echo call "%%cd%%\settings\source.cmd")>> "%location%\epgloader-win.bat"
+(echo SET temp=\settings\cookie.txt)>> "%location%\epgloader-win.bat"
+(echo SET filename=\guide.tar.gz)>> "%location%\epgloader-win.bat"
+(echo SET agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0")>> "%location%\epgloader-win.bat"
 (echo echo ## neu downloaden ##)>> "%location%\epgloader-win.bat"
 (echo %%curl%% -D "%%location%%%%temp%%" "https://takealug.de/wordpress/wp-login.php")>> "%location%\epgloader-win.bat"
 (echo %%curl%% -A %%agent%% -L -D "%%location%%%%temp%%" -b "%%location%%%%temp%%" -d "log=%%user%%&pwd=%%password%%&testcookie=1&rememberme=forever" "https://takealug.de/wordpress/wp-login.php")>> "%location%\epgloader-win.bat"
 (echo %%curl%% -L -o "%%location%%%%filename%%" --cookie "%%location%%%%temp%%" "https://takealug.de/wordpress/download/%%EPG%%/")>> "%location%\epgloader-win.bat"
-(echo exit)>> "%location%\epgloader-win.bat"
+(echo "%%location%%\7z\bin\7z.exe" x -y "%%location%%\guide.tar.gz")>> "%location%\epgloader-win.bat"
+(echo "%%location%%\7z\bin\7z.exe" x -y "%%location%%\guide.tar")>> "%location%\epgloader-win.bat"
+(echo del "%%location%%\guide.tar.gz")>> "%location%\epgloader-win.bat"
+(echo del "%%location%%\guide.tar")>> "%location%\epgloader-win.bat"
+(echo exit)>> "%location%\epgloader-win.bat" 
+
 :curl
 cls
 echo ###########################################################################################
 echo ###########################################################################################
-echo installiere curl in %location%\curl\bin\curl.exe
-echo installiere 7z in %location%\7z\bin\7z.exe
+echo installing curl in %location%\curl\bin\curl.exe
+echo installing 7z in %location%\7z\bin\7z.exe
 echo ###########################################################################################
 echo ###########################################################################################
-pause
-mkdir "%location%"\curl
-mkdir "%location%"\curl\bin
-mkdir "%location%"\7z
-mkdir "%location%"\7z\bin
+ping -n 2 127.0.0.1 > nul
+mkdir "%location%"\curl > nul
+mkdir "%location%"\curl\bin > nul
+mkdir "%location%"\7z > nul
+mkdir "%location%"\7z\bin > nul
 copy "%cd%"\curl\bin\curl.exe "%location%\curl\bin\curl.exe"
 copy "%cd%"\curl\bin\ca-bundle.crt "%location%\curl\bin\ca-bundle.crt"
 copy "%cd%"\7z\bin\7z.exe "%location%\7z\bin\7z.exe"
 copy "%cd%"\7z\bin\7z.dll "%location%\7z\bin\7z.dll"
+ping -n 3 127.0.0.1 > nul
+cls
+echo ###########################################################################################
+echo ###########################################################################################
+echo Setup is almost done, run %location%\epgloader-win.bat to download your EPG
+echo If you want to choose an other EPG Source, run %location%\change-epg.bat
+echo ###########################################################################################
+echo ###########################################################################################
 pause
 cls
 echo ###########################################################################################
 echo ###########################################################################################
-echo Installation ist fertig gestellt, starte %location%\epgloader-win.bat um dein EPG Downzuloaden
-echo Um deine EPG Quelle auszuwählen, oder zu ändern, starte %location%\change-epg.bat
+echo starting EPG Selection....
 echo ###########################################################################################
 echo ###########################################################################################
-pause
+ping -n 2 127.0.0.1 > nul
+"%location%\change-epg.bat"
 exit
