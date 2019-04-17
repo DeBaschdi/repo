@@ -1,6 +1,6 @@
 @echo off
 @break off
-@title EPGLoader Installer 
+@title EPG Changer
 @color 0a
 cls
 echo ###########################################################################################
