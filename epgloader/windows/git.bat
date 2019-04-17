@@ -9,7 +9,7 @@ echo ###                    --Takealug.de feat. easyEPG Preject--               
 echo ###                                Revision 1                                           ###
 echo ###########################################################################################
 
-call "%cd%\settings\config.cmd"
+call "%cd%\config.cmd"
 echo.
 echo .
 echo ===========
