@@ -84,6 +84,7 @@ ping -n 2 127.0.0.1 > nul
 (echo SET curl="%location%\curl\bin\curl.exe")>> "%location%\change-epg.bat"
 (echo SET git="%location%\settings\git.bat")>> "%location%\change-epg.bat"
 (echo %%curl%% -L -o %%git%% "https://github.com/DeBaschdi/repo/raw/master/epgloader/windows/git.bat")>> "%location%\change-epg.bat"
+(echo cd "%%location%%\settings\")>> "%location%\change-epg.bat"
 (echo %%git%% )>> "%location%\change-epg.bat"
 (echo exit)>> "%location%\change-epg.bat"
 
