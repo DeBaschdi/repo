@@ -77,10 +77,11 @@ echo '. '$location'/settings/source.ini'>> "$location"/epgloader-linux.sh
 echo 'filename=$location/guide.tar.gz'>> "$location"/epgloader-linux.sh
 echo 'agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0"'>> "$location"/epgloader-linux.sh
 echo 'cd "$location/"'>> "$location"/epgloader-linux.sh
+echo 'rm guide*'>> "$location"/epgloader-linux.sh
 echo ''>> "$location"/epgloader-linux.sh
 echo '## authenticate and save cookies'>> "$location"/epgloader-linux.sh
 echo ''>> "$location"/epgloader-linux.sh
-echo 'curl  --dump-header "$location"/settings/cookie1.txt "https://takealug.de/wordpress/wp-login.php"'>> "$location"/epgloader-linux.sh
+echo 'curl  --dump-header "$location"/settings/cookie1.txt "https://takealug.de/wordpress/wp-login.php" >/dev/null'>> "$location"/epgloader-linux.sh
 echo 'curl  --user-agent "$agent" \'>> "$location"/epgloader-linux.sh
 echo '      --dump-header  "$location"/settings/cookie1.txt \'>> "$location"/epgloader-linux.sh
 echo '      --cookie "$location"/settings/cookie1.txt --cookie-jar "$location"/settings/cookie1.txt \'>> "$location"/epgloader-linux.sh
@@ -88,7 +89,7 @@ echo '      --form log="$username" \'>> "$location"/epgloader-linux.sh
 echo '      --form pwd="$password" --form testcookie=1 \'>> "$location"/epgloader-linux.sh
 echo '      --form wp-submit="Log In" \'>> "$location"/epgloader-linux.sh
 echo '      --form redirect_to="https://takealug.de/wordpress/wp-admin" --form submit=login \'>> "$location"/epgloader-linux.sh
-echo '      --form rememberme=forever "https://takealug.de/wordpress/wp-login.php"'>> "$location"/epgloader-linux.sh
+echo '      --form rememberme=forever "https://takealug.de/wordpress/wp-login.php" >/dev/null'>> "$location"/epgloader-linux.sh
 echo ''>> "$location"/epgloader-linux.sh
 echo '## access home page with authenticated cookies and download compressed guide'>> "$location"/epgloader-linux.sh
 echo ''>> "$location"/epgloader-linux.sh
@@ -96,7 +97,8 @@ echo 'curl -L -o "$filename" --cookie "$location"/settings/cookie1.txt https://t
 echo ''>> "$location"/epgloader-linux.sh
 echo '##extract guide'>> "$location"/epgloader-linux.sh
 echo ''>> "$location"/epgloader-linux.sh
-echo 'tar xvf "$filename"'>> "$location"/epgloader-linux.sh
+echo 'gzip -d $filename -c >$location/guide.xml'>> "$location"/epgloader-linux.sh
+echo 'rm $filename'>> "$location"/epgloader-linux.sh
 echo 'exit'>> "$location"/epgloader-linux.sh
 sleep 1
 tput clear
