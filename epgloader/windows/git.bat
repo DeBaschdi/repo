@@ -5,7 +5,7 @@
 cls
 echo ###########################################################################################
 echo ###                          EPGchooser for Windows                                     ###
-echo ###                    --Takealug.de feat. easyEPG Preject--                            ###
+echo ###                    --Takealug.de feat. easyEPG Project--                            ###
 echo ###                                Revision 1                                           ###
 echo ###########################################################################################
 
