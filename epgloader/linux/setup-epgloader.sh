@@ -58,16 +58,14 @@ case $n in
     1) echo "Ok" ;;
     2) exit;;
     *) invalid option;;
-esac
-    if ! [ -d "$location" ];then
-        mkdir "$location";
-        mkdir "$location/settings";
-    fi    
+esac   
     if [ -d "$location" ];then
         tput clear
-        echo !!WARNING!! $location already exist, do you want to delete $location and all Subdirectorys?
+        echo " !!WARNING!! $location already exist, do you want to delete $location and all Subdirectorys?"
+        echo ""
         echo "[1] Yes, delete $location and all Subdirectorys"
-        echo "[2] No! Please no!"  
+        echo "[2] No! Please no!"
+        echo ""  
         read n
         case $n in
             1) rm -rf "$location" && mkdir "$location" &&  mkdir "$location/settings" ;;
@@ -75,7 +73,11 @@ esac
             *) invalid option;;
         esac
     fi
-   
+    if ! [ -d "$location" ];then
+        mkdir "$location";
+        mkdir "$location/settings";
+    fi 
+ 
 tput clear
 echo "###########################################################################################"
 echo "###########################################################################################"
@@ -127,16 +129,13 @@ then
     echo ''>> "$location"/epgloader-linux.sh
     echo '## authenticate and save cookies'>> "$location"/epgloader-linux.sh
     echo ''>> "$location"/epgloader-linux.sh
-    echo '$curl --dump-header "$location"/settings/cookie1.txt "https://takealug.de/wordpress/wp-login.php" >/dev/null'>> "$location"/epgloader-linux.sh
-    echo '$curl --user-agent "$agent" \'>> "$location"/epgloader-linux.sh
+    echo '$curl --user-agent "$agent" --location \'>> "$location"/epgloader-linux.sh
     echo '      --dump-header  "$location"/settings/cookie1.txt \'>> "$location"/epgloader-linux.sh
     echo '      --cookie "$location"/settings/cookie1.txt --cookie-jar "$location"/settings/cookie1.txt \'>> "$location"/epgloader-linux.sh
     echo '      --form log="$username" \'>> "$location"/epgloader-linux.sh
     echo '      --form pwd="$password" --form testcookie="1" \'>> "$location"/epgloader-linux.sh
     echo '      --form wp-submit="Log In" \'>> "$location"/epgloader-linux.sh
-    echo '      --form redirect_to="https://takealug.de/wordpress/wp-admin" --form submit=login \'>> "$location"/epgloader-linux.sh
-    echo '      --form rememberme="forever" "https://takealug.de/wordpress/wp-login.php" >/dev/null'>> "$location"/epgloader-linux.sh
-    echo '$curl -L -o "$location/settings/log.txt" --cookie "$location"/settings/cookie1.txt https://takealug.de/wordpress/community/'>> "$location"/epgloader-linux.sh
+    echo '      --form rememberme="forever" "https://takealug.de/wordpress/wp-login.php" >$location/settings/log.txt'>> "$location"/epgloader-linux.sh
     echo ''>> "$location"/epgloader-linux.sh
     echo '## access home page with authenticated cookies and download compressed guide'>> "$location"/epgloader-linux.sh
     echo ''>> "$location"/epgloader-linux.sh
@@ -146,6 +145,7 @@ then
     echo ''>> "$location"/epgloader-linux.sh
     echo '$gzip -d $filename -c >$location/guide.xml'>> "$location"/epgloader-linux.sh
     echo 'rm $filename'>> "$location"/epgloader-linux.sh
+    echo 'rm "$location"/settings/cookie1.txt'>> "$location"/epgloader-linux.sh
     echo 'exit'>> "$location"/epgloader-linux.sh
     sleep 1
     tput clear
@@ -186,13 +186,14 @@ then
     echo '$wget \'>> "$location"/epgloader-linux.sh
     echo '  --user-agent="$agent" \'>> "$location"/epgloader-linux.sh
     echo '  --load-cookies "$location"/settings/cookie1.txt \'>> "$location"/epgloader-linux.sh
-    echo '  "https://takealug.de/wordpress/download/569/" \'>> "$location"/epgloader-linux.sh
+    echo '  "https://takealug.de/wordpress/download/"$EPG"/" \'>> "$location"/epgloader-linux.sh
     echo '  --quiet \'>> "$location"/epgloader-linux.sh
     echo '  -O $filename'>> "$location"/epgloader-linux.sh
     echo '##extract guide'>> "$location"/epgloader-linux.sh
     echo ''>> "$location"/epgloader-linux.sh
     echo 'gzip -d $filename -c >$location/guide.xml'>> "$location"/epgloader-linux.sh
     echo 'rm $filename'>> "$location"/epgloader-linux.sh
+    echo 'rm "$location"/settings/cookie1.txt'>> "$location"/epgloader-linux.sh
     echo 'exit'>> "$location"/epgloader-linux.sh
     sleep 1
     tput clear
@@ -208,9 +209,6 @@ echo "If you want to choose an other EPG Source, run $location/change-epg.sh    
 echo "###########################################################################################"
 echo "###########################################################################################"
 sleep 6
-tput clear
-echo "###########################################################################################"
-echo "###########################################################################################"
 echo "                       Starting change-epg.sh in 3 Seconds                                 "
 echo "###########################################################################################"
 echo "###########################################################################################"
