@@ -5,7 +5,7 @@
 cls
 echo ###########################################################################################
 echo ###                      EPGloader Installer Fuer Windows                               ###
-echo ###                    --Takealug.de feat. easyEPG Project--                            ###
+echo ###                    --Takealug.de feat. easyEPG Preject--                            ###
 echo ###                                Revision 1                                           ###
 echo ###########################################################################################
 pause
@@ -33,7 +33,6 @@ echo .
 echo Are this Settings Correct ? (If no, please cancel and restart)
 echo .
 
-pause
 cls
 echo Create Directory %location%
 setlocal EnableDelayedExpansion
@@ -71,6 +70,7 @@ ping -n 2 127.0.0.1 > nul
 (echo SET location=%location%)>> "%location%\settings\config.cmd"
 (echo SET curl="%location%\curl\bin\curl.exe")>> "%location%\settings\config.cmd"
 (echo SET 7z="%location%\7z\bin\7z.exe")>> "%location%\settings\config.cmd"
+(echo SET cat="%location%\coreutils\cat.exe")>> "%location%\settings\config.cmd"
 
 :epgchanger
 cls
@@ -102,8 +102,7 @@ ping -n 2 127.0.0.1 > nul
 (echo SET filename=\guide.tar.gz)>> "%location%\epgloader-win.bat"
 (echo SET agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0")>> "%location%\epgloader-win.bat"
 (echo echo ## neu downloaden ##)>> "%location%\epgloader-win.bat"
-(echo %%curl%% -D "%%location%%%%temp%%" "https://takealug.de/wordpress/wp-login.php")>> "%location%\epgloader-win.bat"
-(echo %%curl%% -A %%agent%% -L -D "%%location%%%%temp%%" -b "%%location%%%%temp%%" -d "log=%%user%%&pwd=%%password%%&testcookie=1&rememberme=forever" "https://takealug.de/wordpress/wp-login.php")>> "%location%\epgloader-win.bat"
+(echo %%curl%% --user-agent %%agent%% --location --dump-header  "%%location%%%%temp%%" --cookie "%%location%%%%temp%%" --cookie-jar "%%location%%%%temp%%" --form log="%user%" --form pwd="%password%" --form testcookie="1" --form wp-submit="Log In" --form rememberme="forever" "https://takealug.de/wordpress/wp-login.php")>> "%location%\epgloader-win.bat"
 (echo %%curl%% -L -o "%%location%%%%filename%%" --cookie "%%location%%%%temp%%" "https://takealug.de/wordpress/download/%%EPG%%/")>> "%location%\epgloader-win.bat"
 (echo "%%location%%\7z\bin\7z.exe" x -y "%%location%%\guide.tar.gz")>> "%location%\epgloader-win.bat"
 (echo "%%location%%\7z\bin\7z.exe" x -y "%%location%%\guide.tar")>> "%location%\epgloader-win.bat"
@@ -124,10 +123,12 @@ mkdir "%location%"\curl > nul
 mkdir "%location%"\curl\bin > nul
 mkdir "%location%"\7z > nul
 mkdir "%location%"\7z\bin > nul
+mkdir "%location%"\coreutils > nul
 copy "%cd%"\curl\bin\curl.exe "%location%\curl\bin\curl.exe"
 copy "%cd%"\curl\bin\ca-bundle.crt "%location%\curl\bin\ca-bundle.crt"
 copy "%cd%"\7z\bin\7z.exe "%location%\7z\bin\7z.exe"
 copy "%cd%"\7z\bin\7z.dll "%location%\7z\bin\7z.dll"
+copy "%cd%"\coreutils\*.* "%location%\coreutils\"
 ping -n 3 127.0.0.1 > nul
 cls
 echo ###########################################################################################
