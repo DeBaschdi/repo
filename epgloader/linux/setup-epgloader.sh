@@ -1,19 +1,8 @@
 #!/bin/bash
 
-abort()
-{
-    echo >&2 '
-***************
-*** ABORTED ***
-***************
-'
-    echo "An error occurred. Exiting..." >&2
-    exit 1
-}
+curl=$(command -v curl)  #Edit this Line to the correct path to curl if Autodetect dont work. normaly in /usr/bin/curl or /opt/bin/curl or /usr/opt/bin/curl
+wget=$(command -v wget)  #Edit this Line to the correct path to wget if Autodetect dont work.
 
-trap 'abort' 0
-
-set -e
 tput clear
 echo "###########################################################################################"
 echo "###                        EPGloader Installer for Linux                                ###"
@@ -58,7 +47,86 @@ case $n in
     1) echo "Ok" ;;
     2) exit;;
     *) invalid option;;
-esac   
+esac
+
+##check login
+if [ "$engine" == "curl" ];
+then
+    echo "###########################################################################################"
+    echo "###########################################################################################"
+    echo "Checking Username an Password...                                                              "                     
+    echo "###########################################################################################"
+    echo "###########################################################################################"
+    sleep 3
+    $curl --user-agent "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0" --location \
+        --dump-header  tmpfile \
+        --cookie tmpfile --cookie-jar tmpfile\
+        --form log="$username" \
+        --form pwd="$password" --form testcookie="1" \
+        --form wp-submit="Log In" \
+        --form rememberme="forever" "https://takealug.de/wordpress/wp-login.php" >tmpfile2
+    pc=$(cat tmpfile2 |grep -o Premium -m1)
+    uc=$(cat tmpfile2 |grep -o Abmelden -m1)
+    ug=$(if [[ $uc =~ ^.*Abmelden.*$ ]] ; then echo "Welcome back $username Takealug say hello"; fi)
+    pg=$(if [[ $pc =~ ^.*Premium.*$ ]] ; then echo " ,thank you for Donating !!"; fi)
+    if [[ $ug = "" ]] ; then tput clear && echo "Ups, wrong Username or Password, please check your Settings and run Setup again" && rm tmpfile && rm tmpfile2 && exit; fi
+    rm tmpfile && rm tmpfile2
+    tput clear
+    echo "###########################################################################################"
+    echo "###########################################################################################"
+    echo "$ug $pg"                                                                                   
+    echo "###########################################################################################"
+    echo "###########################################################################################"
+    sleep 4
+    tput clear
+fi
+
+if [ "$engine" == "wget" ];
+then
+    echo "###########################################################################################"
+    echo "###########################################################################################"
+    echo "Checking Username an Password...                                                              "                     
+    echo "###########################################################################################"
+    echo "###########################################################################################"
+    sleep 3
+    $wget \
+        --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0" \
+        --save-cookies tmpfile \
+        --keep-session-cookies \
+        --post-data="log="$username"&pwd="$password"&testcookie="1"&wp-submit="Log In"&redirect_to="https://takealug.de/wordpress/wp-admin"&submit="login"&rememberme="forever"" \
+        "https://takealug.de/wordpress/wp-login.php" \
+        -O tmpfile2
+    pc=$(cat tmpfile2 |grep -o Premium -m1)
+    uc=$(cat tmpfile2 |grep -o Abmelden -m1)
+    ug=$(if [[ $uc =~ ^.*Abmelden.*$ ]] ; then echo "Welcome back $username Takealug say hello"; fi)
+    pg=$(if [[ $pc =~ ^.*Premium.*$ ]] ; then echo " ,thank you for Donating !!"; fi)
+    if [[ $ug = "" ]] ; then tput clear && echo "Ups, wrong Username or Password, please check your Settings and run Setup again" && rm tmpfile && rm tmpfile2 && exit; fi
+    rm tmpfile && rm tmpfile2
+    tput clear
+    echo "###########################################################################################"
+    echo "###########################################################################################"
+    echo "$ug $pg"                                                                                   
+    echo "###########################################################################################"
+    echo "###########################################################################################"
+    sleep 5
+    tput clear
+fi
+
+abort()
+{
+    echo >&2 '
+***************
+*** ABORTED ***
+***************
+'
+    echo "An error occurred. Exiting..." >&2
+    exit 1
+}
+
+trap 'abort' 0
+
+set -e
+
     if [ -d "$location" ];then
         tput clear
         echo " !!WARNING!! $location already exist, do you want to delete $location and all Subdirectorys?"
@@ -88,6 +156,9 @@ sleep 1
 echo "username=$username"> "$location"/settings/settings.ini
 echo "password=$password">> "$location"/settings/settings.ini
 echo "location=$location">> "$location"/settings/settings.ini
+echo "engine=$engine">> "$location"/settings/settings.ini
+echo "curl=$curl">> "$location"/settings/settings.ini
+echo "wget=$wget">> "$location"/settings/settings.ini
 sleep 1
 tput clear
 
@@ -120,7 +191,7 @@ then
     echo '. '$location'/settings/source.ini'>> "$location"/epgloader-linux.sh
     echo 'filename=$location/guide.tar.gz'>> "$location"/epgloader-linux.sh
     echo ''>> "$location"/epgloader-linux.sh
-    echo 'curl="$(command -v curl)" ## Path to Curl, if autodetect dont work, modify for your self'>> "$location"/epgloader-linux.sh
+    echo 'curl="$curl" '>> "$location"/epgloader-linux.sh
     echo 'gzip="$(command -v gzip)" ## Path to Gzip, if autodetect dont work, modify for your self'>> "$location"/epgloader-linux.sh
     echo 'agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0"'>> "$location"/epgloader-linux.sh
     echo ''>> "$location"/epgloader-linux.sh
@@ -164,7 +235,7 @@ then
     echo '. '$location'/settings/source.ini'>> "$location"/epgloader-linux.sh
     echo 'filename=$location/guide.tar.gz'>> "$location"/epgloader-linux.sh
     echo ''>> "$location"/epgloader-linux.sh
-    echo 'wget="$(command -v wget)" ## Path to Wget, if autodetect dont work, modify for your self'>> "$location"/epgloader-linux.sh
+    echo 'wget="$wget" '>> "$location"/epgloader-linux.sh
     echo 'gzip="$(command -v gzip)" ## Path to Gzip, if autodetect dont work, modify for your self'>> "$location"/epgloader-linux.sh
     echo 'agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0"'>> "$location"/epgloader-linux.sh
     echo ''>> "$location"/epgloader-linux.sh
@@ -214,6 +285,7 @@ echo "##########################################################################
 echo "###########################################################################################"
 sleep 3
 tput clear
+
 trap : 0
 
 echo >&2 '
@@ -221,5 +293,6 @@ echo >&2 '
 *** DONE *** 
 ************
 '
-$location/change-epg.sh
 
+$location/change-epg.sh
+exit
