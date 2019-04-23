@@ -93,7 +93,7 @@ then
         --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0" \
         --save-cookies tmpfile \
         --keep-session-cookies \
-        --post-data="log="$username"&pwd="$password"&testcookie="1"&wp-submit="Log In"&redirect_to="https://takealug.de/wordpress/wp-admin"&submit="login"&rememberme="forever"" \
+        --post-data="log="$username"&pwd="$password"&testcookie="1"&wp-submit="Log In"&rememberme="forever"" \
         "https://takealug.de/wordpress/wp-login.php" \
         -O tmpfile2
     pc=$(cat tmpfile2 |grep -o Premium -m1)
@@ -171,7 +171,8 @@ sleep 1
 echo '#!/bin/bash'> "$location"/change-epg.sh
 echo '. '$location'/settings/settings.ini'>> "$location"/change-epg.sh
 echo 'git=$location/settings/git.sh'>> "$location"/change-epg.sh
-echo 'curl -L -o $git "https://github.com/DeBaschdi/repo/raw/master/epgloader/linux/git.sh"'>> "$location"/change-epg.sh
+echo 'if [ "$engine" == "curl" ]; then $curl -L -o $git "https://github.com/DeBaschdi/repo/raw/master/epgloader/linux/git.sh"; fi'>> "$location"/change-epg.sh
+echo 'if [ "$engine" == "wget" ]; then $wget -O $git "https://github.com/DeBaschdi/repo/raw/master/epgloader/linux/git.sh"; fi'>> "$location"/change-epg.sh 
 echo 'cd $location/settings/'>> "$location"/change-epg.sh
 echo 'chmod a+x $git'>> "$location"/change-epg.sh
 echo '$git'>> "$location"/change-epg.sh
@@ -248,7 +249,7 @@ then
     echo '  --user-agent="$agent" \'>> "$location"/epgloader-linux.sh
     echo '  --save-cookies "$location"/settings/cookie1.txt \'>> "$location"/epgloader-linux.sh
     echo '  --keep-session-cookies \'>> "$location"/epgloader-linux.sh
-    echo '  --post-data="log="$username"&pwd="$password"&testcookie="1"&wp-submit="Log In"&redirect_to="https://takealug.de/wordpress/wp-admin"&submit="login"&rememberme="forever"" \'>> "$location"/epgloader-linux.sh
+    echo '  --post-data="log="$username"&pwd="$password"&testcookie="1"&wp-submit="Log In"&rememberme="forever"" \'>> "$location"/epgloader-linux.sh
     echo '  "https://takealug.de/wordpress/wp-login.php" \'>> "$location"/epgloader-linux.sh
     echo '  -O $location/settings/log.txt'>> "$location"/epgloader-linux.sh
     echo ''>> "$location"/epgloader-linux.sh

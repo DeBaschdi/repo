@@ -20,7 +20,7 @@ then
         --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0" \
         --save-cookies tmpfile \
         --keep-session-cookies \
-        --post-data="log="$username"&pwd="$password"&testcookie="1"&wp-submit="Log In"&redirect_to="https://takealug.de/wordpress/wp-admin"&submit="login"&rememberme="forever"" \
+        --post-data="log="$username"&pwd="$password"&testcookie="1"&wp-submit="Log In"&rememberme="forever"" \
         "https://takealug.de/wordpress/wp-login.php" \
         -O tmpfile2
 fi
@@ -29,7 +29,7 @@ pc=$(cat tmpfile2 |grep -o Premium -m1)
 uc=$(cat tmpfile2 |grep -o Abmelden -m1)
 ug=$(if [[ $uc =~ ^.*Abmelden.*$ ]] ; then echo "Welcome back $username Takealug say hello"; fi)
 pg=$(if [[ $pc =~ ^.*Premium.*$ ]] ; then echo " ,thank you for Donating !!"; fi)
-if [[ $ug = "" ]] ; then echo "Ups, wrong Username or Password, please check your Settings and run Setup again"; fi
+if [[ $ug = "" ]] ; then echo "Ups, wrong Username or Password, please check your Settings and run Setup again";exit ; fi
 restmsg=$(echo "Sorry, you need Premium Membership for this File")
 tput clear
 
