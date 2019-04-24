@@ -2,6 +2,7 @@
 @break off
 @title EPGLoader Installer 
 @color 0a
+:begin
 cls
 echo ###########################################################################################
 echo ###                      EPGloader Installer Fuer Windows                               ###
@@ -29,10 +30,81 @@ echo Your Password ist                      %password%
 echo Your desired Storage Path is           %location%
 echo ###########################################################################################
 echo ###########################################################################################
-echo .
-echo Are this Settings Correct ? (If no, please cancel and restart)
-echo .
+echo.
+echo.
+echo [1] Yes, go on!
+echo [2] No!
+echo.
 
+set asw=0
+set /p asw="Are this Settings Correct ?"
+if %asw%==1 goto check
+if %asw%==2 goto begin
+
+:check
+cls
+echo ###########################################################################################
+echo ###########################################################################################
+echo Checking Username an Password...                                                                                   
+echo ###########################################################################################
+echo ###########################################################################################
+ping -n 2 127.0.0.1 > nul
+"%cd%\curl\bin\curl.exe" --user-agent "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0" --location --dump-header  tmp1 --cookie tmp1 --cookie-jar tmp1 --form log="%user%" --form pwd="%password%" --form testcookie="1" --form wp-submit="Log In" --form rememberme="forever" "https://takealug.de/wordpress/wp-login.php" >tmp2
+
+"%cd%\coreutils\cat.exe" tmp2 |"%cd%\coreutils\grep.exe" -o -m1 Abmelden > uc
+"%cd%\coreutils\cat.exe" tmp2 |"%cd%\coreutils\grep.exe" -o -m1 Premium > pc
+set /p ul= < uc
+set /p pl= < pc
+
+IF  "%pl%"=="Premium" goto welcomepremium
+IF  "%ul%"=="Abmelden" goto welcomeuser
+IF  "%ul%"=="" goto wronguser
+cls
+
+:welcomeuser
+cls
+echo ###########################################################################################
+echo ###########################################################################################
+echo Welcome back %user% Takealug say hello                                                                                   
+echo ###########################################################################################
+echo ###########################################################################################
+ping -n 2 127.0.0.1 > nul
+del "%cd%\pc" 
+del "%cd%\uc" 
+del "%cd%\tmp1"
+del "%cd%\tmp2"
+goto createdirectory
+
+:welcomepremium
+cls
+echo ###########################################################################################
+echo ###########################################################################################
+echo Welcome back %user% Takealug say hello, thank you for Donating !!                                                                           
+echo ###########################################################################################
+echo ###########################################################################################
+ping -n 2 127.0.0.1 > nul
+del "%cd%\pc" 
+del "%cd%\uc" 
+del "%cd%\tmp1"
+del "%cd%\tmp2"
+goto createdirectory
+
+:wronguser
+cls
+echo ###########################################################################################
+echo ###########################################################################################
+echo Ups, wrong Username or Password, please check your Settings.                                                                          
+echo ###########################################################################################
+echo ###########################################################################################
+ping -n 5 127.0.0.1 > nul
+del "%cd%\pc" 
+del "%cd%\uc" 
+del "%cd%\tmp1"
+del "%cd%\tmp2"
+goto begin
+
+:createdirectory
+pause 
 cls
 echo Create Directory %location%
 setlocal EnableDelayedExpansion
