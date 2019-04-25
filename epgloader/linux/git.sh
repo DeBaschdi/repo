@@ -63,7 +63,7 @@ case $n in
     6) echo EPG=1125 >"$location"/settings/source.ini;;
     7) echo EPG=1126 >"$location"/settings/source.ini;;
     8) echo EPG=1127 >"$location"/settings/source.ini;;
-    *) invalid option;;
+    *) tput clear; echo invalid option;sleep 3; $location/settings/git.sh;;
 esac
 echo
 
