@@ -55,18 +55,19 @@ echo "[8] Free Zattoo CH 3-5Day"
 echo
 read n
 case $n in
-    1) if [[ $pg = "" ]] ; then tput clear; echo "$restmsg"; sleep 3; $location/settings/git.sh; else EPG=879; fi ;;
-    2) if [[ $pg = "" ]] ; then tput clear; echo "$restmsg"; sleep 3; $location/settings/git.sh; else EPG=1122; fi ;;
-    3) if [[ $pg = "" ]] ; then tput clear; echo "$restmsg"; sleep 3; $location/settings/git.sh; else EPG=1123; fi ;;
-    4) if [[ $pg = "" ]] ; then tput clear; echo "$restmsg"; sleep 3; $location/settings/git.sh; else EPG=1124; fi ;;
-    5) EPG=569;;
-    6) EPG=1125;;
-    7) EPG=1126;;
-    8) EPG=1127;;
+    1) if [[ $pg = "" ]] ; then tput clear; echo "$restmsg"; sleep 3; $location/settings/git.sh; else echo EPG=879 >"$location"/settings/source.ini; fi ;;
+    2) if [[ $pg = "" ]] ; then tput clear; echo "$restmsg"; sleep 3; $location/settings/git.sh; else echo EPG=1122 >"$location"/settings/source.ini; fi ;;
+    3) if [[ $pg = "" ]] ; then tput clear; echo "$restmsg"; sleep 3; $location/settings/git.sh; else echo EPG=1123 >"$location"/settings/source.ini; fi ;;
+    4) if [[ $pg = "" ]] ; then tput clear; echo "$restmsg"; sleep 3; $location/settings/git.sh; else echo EPG=1124 >"$location"/settings/source.ini; fi ;;
+    5) echo EPG=569 >"$location"/settings/source.ini;;
+    6) echo EPG=1125 >"$location"/settings/source.ini;;
+    7) echo EPG=1126 >"$location"/settings/source.ini;;
+    8) echo EPG=1127 >"$location"/settings/source.ini;;
     *) invalid option;;
 esac
 echo
-echo "EPG=$EPG" >"$location"/settings/source.ini
+
+
 rm tmpfile && rm tmpfile2
 tput clear
 echo "###########################################################################################"
