@@ -190,7 +190,7 @@ then
     echo '#!/bin/bash'> "$location"/epgloader-linux.sh
     echo '. '$location'/settings/settings.ini'>> "$location"/epgloader-linux.sh
     echo '. '$location'/settings/source.ini'>> "$location"/epgloader-linux.sh
-    echo 'filename=$location/guide.tar.gz'>> "$location"/epgloader-linux.sh
+    echo 'filename=$location/guide.gz'>> "$location"/epgloader-linux.sh
     echo ''>> "$location"/epgloader-linux.sh
     echo 'curl="$curl" '>> "$location"/epgloader-linux.sh
     echo 'gzip="$(command -v gzip)" ## Path to Gzip, if autodetect dont work, modify for your self'>> "$location"/epgloader-linux.sh
@@ -234,7 +234,7 @@ then
     echo '#!/bin/bash'> "$location"/epgloader-linux.sh
     echo '. '$location'/settings/settings.ini'>> "$location"/epgloader-linux.sh
     echo '. '$location'/settings/source.ini'>> "$location"/epgloader-linux.sh
-    echo 'filename=$location/guide.tar.gz'>> "$location"/epgloader-linux.sh
+    echo 'filename=$location/guide.gz'>> "$location"/epgloader-linux.sh
     echo ''>> "$location"/epgloader-linux.sh
     echo 'wget="$wget" '>> "$location"/epgloader-linux.sh
     echo 'gzip="$(command -v gzip)" ## Path to Gzip, if autodetect dont work, modify for your self'>> "$location"/epgloader-linux.sh
