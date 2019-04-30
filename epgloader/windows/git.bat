@@ -67,7 +67,7 @@ cls
 goto done
 
 :5
-(echo SET EPG=569)> "%location%\settings\source.cmd"
+(echo SET EPG=1271)> "%location%\settings\source.cmd"
 cls
 goto done
 

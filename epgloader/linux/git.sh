@@ -59,7 +59,7 @@ case $n in
     2) if [[ $pg = "" ]] ; then tput clear; echo "$restmsg"; sleep 3; $location/settings/git.sh; else echo EPG=1122 >"$location"/settings/source.ini; fi ;;
     3) if [[ $pg = "" ]] ; then tput clear; echo "$restmsg"; sleep 3; $location/settings/git.sh; else echo EPG=1123 >"$location"/settings/source.ini; fi ;;
     4) if [[ $pg = "" ]] ; then tput clear; echo "$restmsg"; sleep 3; $location/settings/git.sh; else echo EPG=1124 >"$location"/settings/source.ini; fi ;;
-    5) echo EPG=569 >"$location"/settings/source.ini;;
+    5) echo EPG=1271 >"$location"/settings/source.ini;;
     6) echo EPG=1125 >"$location"/settings/source.ini;;
     7) echo EPG=1126 >"$location"/settings/source.ini;;
     8) echo EPG=1127 >"$location"/settings/source.ini;;
