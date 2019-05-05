@@ -110,7 +110,6 @@ echo Create Directory %location%
 setlocal EnableDelayedExpansion
 if not exist "%location%" (
   mkdir "%location%"
-  mkdir "%location%"\settings 
   if "!errorlevel!" EQU "0" (
     echo ###########################################################################################
     echo Directory successfully created
@@ -137,6 +136,7 @@ echo Create configuration in %location%\settings\config.cmd
 echo ###########################################################################################
 echo ###########################################################################################
 ping -n 2 127.0.0.1 > nul
+mkdir "%location%"\settings > nul
 (echo SET user=%user%)> "%location%\settings\config.cmd"
 (echo SET password=%password%)>> "%location%\settings\config.cmd"
 (echo SET location=%location%)>> "%location%\settings\config.cmd"
