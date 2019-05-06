@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="service.takealugepgdownloader" name="Takealug EPG Downloader" version="0.1.2" provider-name="DeBaschdi, Sunsettrack4">
+    <requires>
+        <import addon="xbmc.python" version="2.14.0"/>
+        <import addon="script.module.requests"/>
+    </requires>
+    <extension point="xbmc.service" library="service.py" start="startup" />
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary>Takealug EPG Downloader</summary>
+        <description>Choose and download XML EPG Provided by Takealug.de and the EasyEPG Project!</description>
+        <source>https://github.com/DeBaschdi/repo/tree/master/service.takealugepgdownloader/</source>
+        <forum>https://takealug.de/wordpress/community/fertiges-xml-epg/</forum>
+    </extension>
+</addon>
