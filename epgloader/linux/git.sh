@@ -14,16 +14,6 @@ then
         --form rememberme="forever" "https://takealug.de/wordpress/wp-login.php" >tmpfile2
 fi
 
-if [ "$engine" == "wget" ];
-then
-    $wget \
-        --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0" \
-        --save-cookies tmpfile \
-        --keep-session-cookies \
-        --post-data='log='$username'&pwd='$password'&testcookie="1"&wp-submit="Log In"&rememberme="forever"' 'https://takealug.de/wordpress/wp-login.php' \
-        --output-document=tmpfile2
-fi
-
 pc=$(cat tmpfile2 |grep -o Premium -m1)
 uc=$(cat tmpfile2 |grep -o Abmelden -m1)
 ug=$(if [[ $uc =~ ^.*Abmelden.*$ ]] ; then echo "Welcome back $username Takealug say hello"; fi)
