@@ -25,9 +25,9 @@ cls
 
 echo ###########################################################################################
 echo ###########################################################################################
-echo Your Username on Takealug ist          %user%
-echo Your Password ist                      %password%
-echo Your desired Storage Path is           %location%
+echo Your Username on Takealug ist          "%user%"
+echo Your Password ist                      "%password%"
+echo Your desired Storage Path is           "%location%"
 echo ###########################################################################################
 echo ###########################################################################################
 echo.
