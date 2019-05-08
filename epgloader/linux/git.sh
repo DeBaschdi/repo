@@ -8,8 +8,8 @@ then
     $curl --user-agent "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0" --location \
         --dump-header  tmpfile \
         --cookie tmpfile --cookie-jar tmpfile\
-        --form log="$username" \
-        --form pwd="$password" --form testcookie="1" \
+        --form log=''$username'' \
+        --form pwd=''$password'' --form testcookie="1" \
         --form wp-submit="Log In" \
         --form rememberme="forever" "https://takealug.de/wordpress/wp-login.php" >tmpfile2
 fi
@@ -20,9 +20,8 @@ then
         --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0" \
         --save-cookies tmpfile \
         --keep-session-cookies \
-        --post-data="log="$username"&pwd="$password"&testcookie='1'&wp-submit='Log In'&rememberme='forever'" \
-        "https://takealug.de/wordpress/wp-login.php" \
-        -O tmpfile2
+        --post-data='log='$username'&pwd='$password'&testcookie="1"&wp-submit="Log In"&rememberme="forever"' 'https://takealug.de/wordpress/wp-login.php' \
+        --output-document=tmpfile2
 fi
 
 pc=$(cat tmpfile2 |grep -o Premium -m1)
