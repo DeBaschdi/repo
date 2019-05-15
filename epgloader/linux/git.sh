@@ -20,7 +20,7 @@ ug=$(if [[ $uc =~ ^.*Abmelden.*$ ]] ; then echo "Welcome back $username Takealug
 pg=$(if [[ $pc =~ ^.*Premium.*$ ]] ; then echo " ,thank you for Donating !!"; fi)
 if [[ $ug = "" ]] ; then echo "Ups, wrong Username or Password, please check your Settings and run Setup again";exit ; fi
 restmsg=$(echo "Sorry, you need Premium Membership for this File")
-tput clear
+clear
 
 echo
 echo "$ug $pg"
@@ -44,21 +44,21 @@ echo "[8] Free Zattoo CH 3-5Day"
 echo
 read n
 case $n in
-    1) if [[ $pg = "" ]] ; then tput clear; echo "$restmsg"; sleep 3; $location/settings/git.sh; else echo EPG=879 >"$location"/settings/source.ini; fi ;;
-    2) if [[ $pg = "" ]] ; then tput clear; echo "$restmsg"; sleep 3; $location/settings/git.sh; else echo EPG=1122 >"$location"/settings/source.ini; fi ;;
-    3) if [[ $pg = "" ]] ; then tput clear; echo "$restmsg"; sleep 3; $location/settings/git.sh; else echo EPG=1123 >"$location"/settings/source.ini; fi ;;
-    4) if [[ $pg = "" ]] ; then tput clear; echo "$restmsg"; sleep 3; $location/settings/git.sh; else echo EPG=1124 >"$location"/settings/source.ini; fi ;;
+    1) if [[ $pg = "" ]] ; then clear; echo "$restmsg"; sleep 3; $location/settings/git.sh; else echo EPG=879 >"$location"/settings/source.ini; fi ;;
+    2) if [[ $pg = "" ]] ; then clear; echo "$restmsg"; sleep 3; $location/settings/git.sh; else echo EPG=1122 >"$location"/settings/source.ini; fi ;;
+    3) if [[ $pg = "" ]] ; then clear; echo "$restmsg"; sleep 3; $location/settings/git.sh; else echo EPG=1123 >"$location"/settings/source.ini; fi ;;
+    4) if [[ $pg = "" ]] ; then clear; echo "$restmsg"; sleep 3; $location/settings/git.sh; else echo EPG=1124 >"$location"/settings/source.ini; fi ;;
     5) echo EPG=1271 >"$location"/settings/source.ini;;
     6) echo EPG=1125 >"$location"/settings/source.ini;;
     7) echo EPG=1126 >"$location"/settings/source.ini;;
     8) echo EPG=1127 >"$location"/settings/source.ini;;
-    *) tput clear; echo invalid option;sleep 3; $location/settings/git.sh;;
+    *) clear; echo invalid option;sleep 3; $location/settings/git.sh;;
 esac
 echo
 
 
 rm tmpfile && rm tmpfile2
-tput clear
+clear
 echo "###########################################################################################"
 echo "###########################################################################################"
 echo "##                                     DONE                                              ##"
