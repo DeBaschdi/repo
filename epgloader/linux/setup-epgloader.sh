@@ -179,10 +179,13 @@ then
     echo '## access home page with authenticated cookies and download compressed guide'>> "$location"/epgloader-linux.sh
     echo ''>> "$location"/epgloader-linux.sh
     echo '$curl -L -o "$filename" --cookie "$location"/settings/cookie1.txt https://takealug.de/wordpress/download/"$EPG"/'>> "$location"/epgloader-linux.sh
+    echo 'chmod 777 $filename'>> "$location"/epgloader-linux.sh
     echo ''>> "$location"/epgloader-linux.sh
     echo '##extract guide'>> "$location"/epgloader-linux.sh
     echo ''>> "$location"/epgloader-linux.sh
-    echo '$gzip -d $filename -c >$location/guide.xml'>> "$location"/epgloader-linux.sh
+    echo '$gzip -d $filename -c >"$location"/guide.xml'>> "$location"/epgloader-linux.sh
+    echo 'chmod 777 "$location"/guide.xml'>> "$location"/epgloader-linux.sh
+    echo ''>> "$location"/epgloader-linux.sh
     echo 'rm $filename'>> "$location"/epgloader-linux.sh
     echo 'rm "$location"/settings/cookie1.txt'>> "$location"/epgloader-linux.sh
     echo 'exit'>> "$location"/epgloader-linux.sh
