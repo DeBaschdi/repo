@@ -1,8 +1,17 @@
 #!/bin/bash
 
-curl=$(command -v curl)  #Edit this Line to the correct path to curl if Autodetect dont work. normaly in /usr/bin/curl or /opt/bin/curl or /usr/opt/bin/curl
+# CHECK IF ALL APPLICATIONS ARE INSTALLED
+command -v curl >/dev/null 2>&1 || { printf "\ncurl is required but it's not installed!" >&2; ERROR1="true"; }
+command -v gzip >/dev/null 2>&1 || { printf "\ngzip is required but it's not installed!" >&2; ERROR1="true"; }
+command -v clear >/dev/null 2>&1 || { printf "\nclear is required but it's not installed!" >&2; ERROR1="true"; }
 
-tput clear
+if [ ! -z "$ERROR1" ]
+then
+	printf "\n\n[ FATAL ERROR ] Required applications are missing - Stop.\n"
+	exit 1
+fi
+
+clear
 echo "###########################################################################################"
 echo "###                        EPGloader Installer for Linux                                ###"
 echo "###                    --Takealug.de feat. easyEPG Project--                            ###"
@@ -18,9 +27,10 @@ echo
 echo 'Choose your desired Storage Path (like /home/'$USER'/epgloader)'
 read location
 
+curl=$(command -v curl)
 engine=curl
 
-tput clear
+clear
 echo "###########################################################################################"
 echo "###########################################################################################"
 echo "Your Username on Takealug ist          $username                                           "
@@ -36,9 +46,9 @@ read n
 case $n in
     1) echo "Ok" ;;
     2) exit;;
-    *) invalid option;;
+    *) clear; echo invalid option;sleep 3; exit;;
 esac
-tput clear
+clear
 ##check login
 if [ "$engine" == "curl" ];
 then
@@ -59,16 +69,16 @@ then
     uc=$(cat tmpfile2 |grep -o Abmelden -m1)
     ug=$(if [[ $uc =~ ^.*Abmelden.*$ ]] ; then echo "Welcome back $username Takealug say hello"; fi)
     pg=$(if [[ $pc =~ ^.*Premium.*$ ]] ; then echo " ,thank you for Donating !!"; fi)
-    if [[ $ug = "" ]] ; then tput clear && echo "Ups, wrong Username or Password, please check your Settings and run Setup again" && rm tmpfile && rm tmpfile2 && exit; fi
+    if [[ $ug = "" ]] ; then clear && echo "Ups, wrong Username or Password, please check your Settings and run Setup again" && rm tmpfile && rm tmpfile2 && exit; fi
     rm tmpfile && rm tmpfile2
-    tput clear
+    clear
     echo "###########################################################################################"
     echo "###########################################################################################"
     echo "$ug $pg"                                                                                   
     echo "###########################################################################################"
     echo "###########################################################################################"
     sleep 4
-    tput clear
+    clear
 fi
 
 abort()
@@ -87,7 +97,7 @@ trap 'abort' 0
 set -e
 
     if [ -d "$location" ];then
-        tput clear
+        clear
         echo " !!WARNING!! $location already exist, do you want to delete $location and all Subdirectorys?"
         echo ""
         echo "[1] Yes, delete $location and all Subdirectorys"
@@ -97,7 +107,7 @@ set -e
         case $n in
             1) rm -rf "$location" && mkdir "$location" &&  mkdir "$location/settings" ;;
             2) exit;;
-            *) invalid option;;
+            *) clear; echo invalid option;sleep 3; exit;;
         esac
     fi
     if ! [ -d "$location" ];then
@@ -105,7 +115,7 @@ set -e
         mkdir "$location/settings";
     fi 
  
-tput clear
+clear
 echo "###########################################################################################"
 echo "###########################################################################################"
 echo "Create configuration in $location/settings/settings.ini                                    "
@@ -118,7 +128,7 @@ echo "location=$location">> "$location"/settings/settings.ini
 echo "engine=$engine">> "$location"/settings/settings.ini
 echo "curl=$curl">> "$location"/settings/settings.ini
 sleep 1
-tput clear
+clear
 
 echo "###########################################################################################"
 echo "###########################################################################################"
@@ -134,7 +144,7 @@ echo 'cd $location/settings/'>> "$location"/change-epg.sh
 echo 'chmod a+x $git'>> "$location"/change-epg.sh
 echo '$git'>> "$location"/change-epg.sh
 sleep 1
-tput clear
+clear
 
 if [ "$engine" == "curl" ];
 then
@@ -154,7 +164,7 @@ then
     echo 'agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0"'>> "$location"/epgloader-linux.sh
     echo ''>> "$location"/epgloader-linux.sh
     echo 'cd "$location/"'>> "$location"/epgloader-linux.sh
-    echo 'rm guide*'>> "$location"/epgloader-linux.sh
+    echo 'rm guide* >/dev/null 2>&1'>> "$location"/epgloader-linux.sh
     echo ''>> "$location"/epgloader-linux.sh
     echo '## authenticate and save cookies'>> "$location"/epgloader-linux.sh
     echo ''>> "$location"/epgloader-linux.sh
@@ -177,7 +187,7 @@ then
     echo 'rm "$location"/settings/cookie1.txt'>> "$location"/epgloader-linux.sh
     echo 'exit'>> "$location"/epgloader-linux.sh
     sleep 1
-    tput clear
+    clear
 fi
 
 chmod a+x $location/epgloader-linux.sh
@@ -193,7 +203,7 @@ echo "                       Starting change-epg.sh in 3 Seconds                
 echo "###########################################################################################"
 echo "###########################################################################################"
 sleep 3
-tput clear
+clear
 
 trap : 0
 
