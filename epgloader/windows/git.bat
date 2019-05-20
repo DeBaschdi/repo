@@ -14,7 +14,7 @@ set /p pl= < "%location%\settings\pc"
 cls
 echo ###########################################################################################
 echo ###                          EPGchooser for Windows                                     ###
-echo ###                    --Takealug.de feat. easyEPG Project--                            ###
+echo ###                  --Takealug.de feat. The easyEPG Project--                          ###
 echo ###                                Revision 1                                           ###
 echo ###########################################################################################
 
@@ -25,12 +25,12 @@ echo ===========
 echo.
 echo [1]Premium DE AT CH 12-14Day
 echo [2]Premium easyEPG 12-14Day
-echo [3]Premium Zattoo DE 12-14Day
-echo [4]Premium Zattoo CH 12-14Day
+echo [3]Premium Zattoo 12-14Day
+echo [4]Premium Wilmaa 12-14Day
 echo [5]Free DE AT CH 3-5Day
 echo [6]Free easyEPG 3-5Day
-echo [7]Free Zattoo DE 3-5Day
-echo [8]Free Zattoo CH 3-5Day
+echo [7]Free Zattoo 3-5Day
+echo [8]Free Wilmaa 3-5Day
 echo.
 
 set asw=0
