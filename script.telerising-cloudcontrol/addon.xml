@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="script.telerising-cloudcontrol"
+version="0.0.1"
+name="Telerising Cloudcontrol"
+provider-name="DeBaschdi, sunsettrack4">
+<requires>
+  <import addon="xbmc.python" version="2.25.0"/>
+  <import addon="script.module.requests"/>
+</requires>
+<extension point="xbmc.python.script" library="default.py">
+  <provides>executable</provides>
+</extension>
+<extension point="xbmc.addon.metadata">
+  <summary lang="en">Telerising Cloud Control</summary>
+  <description lang="en_GB">Manage Zattoo and Reseller Cloud Recordings via Telerising API.
+  Watch / Download and Delete Cloud Recordings</description>
+  <disclaimer lang="en_GB">Watch / Download and Delete Cloud Recordings.</disclaimer>
+  <assets>
+    <icon>icon.png</icon>
+    <fanart>fanart.jpg</fanart>
+    <screenshot>resources\screenshot-01.png</screenshot>
+    <screenshot>resources\screenshot-02.png</screenshot>
+    <screenshot>resources\screenshot-03.png</screenshot>
+    <screenshot>resources\screenshot-04.png</screenshot>
+  </assets>
+  <news>Updated with latest artwork metadata</news>
+</extension>
+</addon>
