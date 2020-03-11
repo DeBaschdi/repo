@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
 <addon id="script.telerising-cloudcontrol"
-version="0.0.5"
+version="0.0.6"
 name="Telerising Cloudcontrol"
 provider-name="DeBaschdi, sunsettrack4">
 <requires>
