@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.video.telerising-cloudcontrol"
-version="0.0.1"
-name="Telerising Cloudcontrol VOD"
+version="0.0.2"
+name="Telerising Cloudcontrol VoD"
 provider-name="DeBaschdi, Birger Jesch">
 <requires>
   <import addon="xbmc.python" version="2.25.0"/>
