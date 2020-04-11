@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
 <addon id="plugin.video.telerising-cloudcontrol"
-version="0.0.6"
+version="0.0.7"
 name="Telerising Cloudcontrol VoD"
 provider-name="DeBaschdi, Birger Jesch">
 <requires>
@@ -28,7 +28,7 @@ provider-name="DeBaschdi, Birger Jesch">
 </extension>
 </addon>
 
-<addon id="service.telerising" name="Telerising API" version="1.3.4" provider-name="DeBaschdi, sunsettrack4">
+<addon id="service.telerising" name="Telerising API" version="1.3.5~beta1" provider-name="DeBaschdi, sunsettrack4">
     <requires>
         <import addon="xbmc.python" version="2.14.0"/>
         <import addon="script.module.requests"/>
